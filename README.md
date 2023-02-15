@@ -1,6 +1,6 @@
 # Multi-modal Aerial View Object Classification Challenge (MAVOC 2022) Solution
 
-This repo contains the solution for MAVOC challenge track 2 (SAR+EO), which utilized **data augmentation, focal loss, semi-supervised learning, label calibration** etc. techniques to tackle with the given task. Detailed information can be found in [method description](./_assets/mavoc22_method_description.pdf). This solution ranked *6th* in the final leaderboard in test phase.
+This repo contains the solution for MAVOC challenge track 2 (SAR+EO), which utilized **data augmentation, focal loss, semi-supervised learning, label calibration** etc. techniques to tackle with the given task. Detailed information can be found in [method description](./_assets/mavoc22_method_description.pdf). This solution ranked **6th** in the final leaderboard in test phase.
 
 ### Dataset structures
 
