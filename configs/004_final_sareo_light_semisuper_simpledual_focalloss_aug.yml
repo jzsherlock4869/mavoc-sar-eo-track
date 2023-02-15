@@ -1,0 +1,75 @@
+device: cuda
+save_dir: ./experiments
+log_dir: ./tb_logger
+model_type: SemiSuperSAREOModel
+
+datasets:
+  trainval:
+    type: SAREODataset
+    info_csv: data/train_dataset_info.csv
+    dataroot: /path/to/dataset
+    sample_per_class: 1000
+    val_ratio: 0.2
+    sar_input_size: 256
+    eo_input_size: 256
+    batch_size: 32
+    num_workers: 16
+    aug_mode: v1  # v1 for strong aug, v0 for weak
+
+  test:
+    type: SAREODataset
+    info_csv: data/test_dataset_info.csv
+    dataroot: /path/to/dataset
+    sar_input_size: 256
+    eo_input_size: 256
+
+  pseudo:
+    type: SAREODataset
+    info_csv: ~
+    dataroot: /path/to/dataset
+    sar_input_size: 256
+    eo_input_size: 256
+    batch_size: 32
+    num_workers: 16
+    aug_mode: v1  # v1 for strong aug, v0 for weak
+
+train:
+  num_epoch: 200
+  # semi supervised settings
+  start_semi: [80]
+  conf_thr: [0.96]
+
+  model_arch: 
+    type: SimpleDualstreamArch
+    backbone: mobilenetv2_100
+    num_classes: 10
+
+  optimizer:
+    type: Adam
+    lr: !!float 1e-3
+    weight_decay: !!float 0
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [100, 150]
+    gamma: 0.2
+    verbose: false
+
+  criterion:
+    type: FocalLoss
+    gamma: 2
+    reduction: mean
+    label_smooth: 0.1
+
+
+eval:
+  eval_interval: 5
+
+
+test:
+  model_arch: 
+    type: SimpleDualstreamArch
+    backbone: mobilenetv2_100
+    num_classes: 10
+    load_path: ~
+  save_filename: results.csv

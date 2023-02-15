@@ -1,0 +1,1 @@
+ps -ef | grep mavoc | awk -F" " '{print $2}' | xargs kill
